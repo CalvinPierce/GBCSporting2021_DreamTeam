@@ -1,0 +1,69 @@
+﻿@model Incident
+@{
+    string title = ViewBag.Action + " Incident";
+    ViewBag.Title = title;
+}
+
+<h2>@title</h2>
+
+<form asp-action="Edit" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="CustomerId">Customer</label>
+        <select asp-for="CustomerId" class="form-control">
+            <option value="">Customer</option>
+            @foreach (Customer c in ViewBag.Customer)
+            {
+                <option value="@c.CustomerId">@c.FullName</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ProductId">Product</label>
+        <select asp-for="ProductId" class="form-control">
+            <option value="">Product</option>
+            @foreach (Products p in ViewBag.Product)
+            {
+                <option value="@p.ProductId">@p.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Title">Title</label>
+        <input asp-for="Title" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description">Description</label>
+        <input asp-for="Description" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TechnicianId">Technician</label>
+        <select asp-for="TechnicianId" class="form-control">
+            <option value=""></option>
+            @foreach (Technician t in ViewBag.Technician)
+            {
+                <option value="@t.TechnicianId">@t.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Open">Date Opened</label>
+        <input asp-for="Open" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Close">Date Closed</label>
+        <input asp-for="Close" class="form-control">
+    </div>
+
+    <input type="hidden" asp-for="IncidentId" />
+
+    <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
+    <a asp-controller="Incident" asp-action="Index" class="btn btn-primary">Cancel</a>
+</form>

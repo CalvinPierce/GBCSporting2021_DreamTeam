@@ -1,0 +1,35 @@
+﻿@model List<Registration>
+@{
+    ViewBag.Title = "Registration Manager";
+}
+
+<h2>Registration Manager</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr><th>Product</th><th>Customer</th><th>Registrations</th><th></th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (var reg in Model)
+        {
+            <tr>
+                <td>@reg.Product.Name</td>
+                <td>@reg.Customer.FullName</td>
+                <td>@reg.RegistrationDate.ToString("yyyy/MM/dd")</td>
+                <td>
+                    <a class="btn btn-primary" role="button"
+                       asp-controller="Registration" asp-action="Edit"
+                       asp-route-id="@reg.RegistrationId"
+                       asp-route-slug="@reg.Slug">Edit</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" role="button"
+                       asp-controller="Registration" asp-action="Delete"
+                       asp-route-id="@reg.RegistrationId"
+                       asp-route-slug="@reg.Slug">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-primary" role="button" asp-controller="Registration" asp-action="Add">Add Incident</a>
+<a class="btn btn-primary" role="button" asp-controller="Home" asp-action="Index">Home</a>
