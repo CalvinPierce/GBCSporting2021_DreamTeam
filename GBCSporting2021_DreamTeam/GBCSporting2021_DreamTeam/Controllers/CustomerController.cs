@@ -13,12 +13,18 @@ namespace GBCSporting2021_DreamTeam.Controllers
         {
             context = ctx;
         }
-        public IActionResult Index()
+        public RedirectToActionResult Index()
+        {
+            return RedirectToAction("List", "Customer");
+        }
+
+        [Route("[controller]")]
+        public IActionResult List()
         {
             var customer = context.Customers
-                .Include(c => c.Country)
-                .OrderBy(c => c.LastName)
-                .ToList();
+                 .Include(c => c.Country)
+                 .OrderBy(c => c.LastName)
+                 .ToList();
             return View(customer);
         }
 
@@ -44,11 +50,17 @@ namespace GBCSporting2021_DreamTeam.Controllers
             if (ModelState.IsValid)
             {
                 if (customer.CustomerId == 0)
+                {
                     context.Customers.Add(customer);
+                    TempData["message"] = $"{customer.FullName} was added.";
+                }
                 else
+                {
                     context.Customers.Update(customer);
+                    TempData["message"] = $"{customer.FullName} was updated.";
+                }
                 context.SaveChanges();
-                return RedirectToAction("Index", "Customer");
+                return RedirectToAction("List", "Customer");
             }
             else
             {
@@ -66,11 +78,12 @@ namespace GBCSporting2021_DreamTeam.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(Customer customer)
+        public RedirectToActionResult Delete(Customer customer)
         {
+            TempData["message"] = "Customer successfully deleted.";
             context.Customers.Remove(customer);
             context.SaveChanges();
-            return RedirectToAction("Index", "Customer");
+            return RedirectToAction("List", "Customer");
         }
     }
 }

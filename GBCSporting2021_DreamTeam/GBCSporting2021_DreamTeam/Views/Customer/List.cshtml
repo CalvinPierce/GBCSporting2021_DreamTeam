@@ -1,6 +1,10 @@
 ﻿@model List<Customer>
 @{
     ViewBag.Title = "Customer Manager";
+    if (TempData["message"] != null)
+    {
+        <h2 class="bg-dark text-white p-2">@TempData["message"]</h2>
+    }
 }
 
 <h2>Customer Manager</h2>

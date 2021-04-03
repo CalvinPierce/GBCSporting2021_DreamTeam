@@ -1,8 +1,11 @@
 ﻿@model List<Products>
 @{
     ViewBag.Title = "Product Manager";
+    if (TempData["message"] != null)
+    {
+        <h2 class="bg-dark text-white p-2">@TempData["message"]</h2>
+    }
 }
-
 <h2>Product Manager</h2>
 <table class="table table-bordered">
     <thead>

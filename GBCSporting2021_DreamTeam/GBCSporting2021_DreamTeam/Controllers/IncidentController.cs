@@ -13,18 +13,13 @@ namespace GBCSporting2021_DreamTeam.Controllers
         {
             context = ctx;
         }
-        public IActionResult Index()
+        public RedirectToActionResult Index()
         {
-            var incident = context.Incident
-                .Include(i => i.Customer)
-                .Include(i => i.Product)
-                .Include(i => i.Technician)
-                .OrderBy(i => i.Open)
-                .ToList();
-            return View(incident);
+            return RedirectToAction("List", "Incident");
         }
 
-        public IActionResult Update()
+        [Route("[controller]")]
+        public IActionResult List()
         {
             var incident = context.Incident
                 .Include(i => i.Customer)
@@ -61,11 +56,17 @@ namespace GBCSporting2021_DreamTeam.Controllers
             if (ModelState.IsValid)
             {
                 if (incident.IncidentId == 0)
+                {
                     context.Incident.Add(incident);
+                    TempData["message"] = $"{incident.Title} was added.";
+                }
                 else
+                {
                     context.Incident.Update(incident);
+                    TempData["message"] = $"{incident.Title} was updated.";
+                }
                 context.SaveChanges();
-                return RedirectToAction("Index", "Incident");
+                return RedirectToAction("List", "Incident");
             }
             else
             {
@@ -85,11 +86,12 @@ namespace GBCSporting2021_DreamTeam.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(Incident incident)
+        public RedirectToActionResult Delete(Incident incident)
         {
+            TempData["message"] = "Incident successfully deleted.";
             context.Incident.Remove(incident);
             context.SaveChanges();
-            return RedirectToAction("Index", "Incident");
+            return RedirectToAction("List", "Incident");
         }
     }
 }

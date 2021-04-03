@@ -12,7 +12,13 @@ namespace GBCSporting2021_DreamTeam.Controllers
         {
             context = ctx;
         }
-        public IActionResult Index()
+        public RedirectToActionResult Index()
+        {
+            return RedirectToAction("List", "Technician");
+        }
+
+        [Route("[controller]")]
+        public IActionResult List()
         {
             var tech = context.Technicians
                 .OrderBy(t => t.Name)
@@ -40,11 +46,17 @@ namespace GBCSporting2021_DreamTeam.Controllers
             if (ModelState.IsValid)
             {
                 if (tech.TechnicianId == 0)
+                {
                     context.Technicians.Add(tech);
+                    TempData["message"] = $"{tech.Name} was added.";
+                }
                 else
+                {
                     context.Technicians.Update(tech);
+                    TempData["message"] = $"{tech.Name} was updated.";
+                }
                 context.SaveChanges();
-                return RedirectToAction("Index", "Technician");
+                return RedirectToAction("List", "Technician");
             }
             else
             {
@@ -61,11 +73,12 @@ namespace GBCSporting2021_DreamTeam.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(Technician tech)
+        public RedirectToActionResult Delete(Technician tech)
         {
+            TempData["message"] = "Technician successfully deleted.";
             context.Technicians.Remove(tech);
             context.SaveChanges();
-            return RedirectToAction("Index", "Technician");
+            return RedirectToAction("List", "Technician");
         }
     }
 }

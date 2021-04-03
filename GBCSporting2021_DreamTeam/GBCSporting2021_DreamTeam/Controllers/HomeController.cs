@@ -8,5 +8,11 @@ namespace GBCSporting2021_DreamTeam.Controllers
         {
             return View();
         }
+
+        [Route("[action]")]
+        public IActionResult About()
+        {
+            return View();
+        }
     }
 }

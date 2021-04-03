@@ -13,7 +13,13 @@ namespace GBCSporting2021_DreamTeam.Controllers
         {
             context = ctx;
         }
-        public IActionResult Index()
+        public RedirectToActionResult Index()
+        {
+            return RedirectToAction("List", "Registration");
+        }
+
+        [Route("[controller]")]
+        public IActionResult List()
         {
             var reg = context.Registration
                 .Include(r => r.Product)
@@ -47,11 +53,17 @@ namespace GBCSporting2021_DreamTeam.Controllers
             if (ModelState.IsValid)
             {
                 if (reg.RegistrationId == 0)
+                {
                     context.Registration.Add(reg);
+                    TempData["message"] = $"Registration for {reg.Customer.FullName} was added.";
+                }
                 else
+                {
                     context.Registration.Update(reg);
+                    TempData["message"] = $"Registration for {reg.Customer.FullName} was updated.";
+                }
                 context.SaveChanges();
-                return RedirectToAction("Index", "Registration");
+                return RedirectToAction("List", "Registration");
             }
             else
             {
@@ -70,11 +82,12 @@ namespace GBCSporting2021_DreamTeam.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(Registration reg)
+        public RedirectToActionResult Delete(Registration reg)
         {
+            TempData["message"] = "Registration successfully deleted.";
             context.Registration.Remove(reg);
             context.SaveChanges();
-            return RedirectToAction("Index", "Registration");
+            return RedirectToAction("List", "Registration");
         }
     }
 }

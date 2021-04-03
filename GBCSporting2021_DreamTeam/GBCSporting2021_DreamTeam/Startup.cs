@@ -21,7 +21,7 @@ namespace GBCSporting2021_DreamTeam
         {
             services.AddRouting(options => {
                 options.LowercaseUrls = true;
-                options.AppendTrailingSlash = true;
+                // options.AppendTrailingSlash = true; Puts a slash at the end of url
             });
             services.AddControllersWithViews();
 

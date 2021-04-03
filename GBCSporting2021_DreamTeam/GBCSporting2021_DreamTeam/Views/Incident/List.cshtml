@@ -1,6 +1,10 @@
 ﻿@model List<Incident>
 @{
     ViewBag.Title = "Incident Manager";
+    if (TempData["message"] != null)
+    {
+        <h2 class="bg-dark text-white p-2">@TempData["message"]</h2>
+    }
 }
 
 <h2>Incident Manager</h2>
