@@ -18,63 +18,90 @@ namespace GBCSporting2021_DreamTeam.Controllers
             return RedirectToAction("List", "Incident");
         }
 
-        [Route("[controller]")]
-        public IActionResult List()
+        [Route("[controller]/{filter?}")]
+        public IActionResult List(string filter = "all")
         {
-            var incident = context.Incident
+            var model = new IncidentViewModel
+            {
+                Filter = filter,
+                Incident = context.Incident.ToList()
+            };
+
+            IQueryable<Incident> query = context.Incident
                 .Include(i => i.Customer)
                 .Include(i => i.Product)
-                .Include(i => i.Technician)
-                .OrderBy(i => i.Open)
-                .ToList();
-            return View(incident);
+                .Include(i => i.Technician);
+
+            if (filter == "all")
+                query = query.Where(
+                    i => i.IncidentId != null);
+            if (filter == "unassigned")
+                query = query.Where(
+                    i => i.TechnicianId == null);
+            if (filter == "open")
+                query = query.Where(
+                    i => i.Close == null);
+
+            model.Incident = query.ToList();
+            model.Filter = filter;
+
+            return View(model);
         }
 
         [HttpGet]
         public IActionResult Add()
         {
             ViewBag.Action = "Add";
-            ViewBag.Customer = context.Customers.OrderBy(c => c.LastName).ToList();
-            ViewBag.Product = context.Products.OrderBy(p => p.Name).ToList();
-            ViewBag.Technician = context.Technicians.OrderBy(t => t.Name).ToList();
-            return View("Edit", new Incident());
+            var model = new IncidentEditViewModel
+            {
+                Customers = context.Customers.ToList(),
+                Products = context.Products.ToList(),
+                Technicians = context.Technicians.ToList(),
+                Incident = new Incident(),
+                Action = "Add"
+            };
+            return View("Edit", model);
         }
         [HttpGet]
         public IActionResult Edit(int id)
         {
             ViewBag.Action = "Edit";
-            ViewBag.Customer = context.Customers.OrderBy(c => c.LastName).ToList();
-            ViewBag.Product = context.Products.OrderBy(p => p.Name).ToList();
-            ViewBag.Technician = context.Technicians.OrderBy(t => t.Name).ToList();
-            var incident = context.Incident.Find(id);
-            return View(incident);
+            var model = new IncidentEditViewModel
+            {
+                Customers = context.Customers.ToList(),
+                Products = context.Products.ToList(),
+                Technicians = context.Technicians.ToList(),
+                Incident = context.Incident.Find(id),
+                Action = "Edit"
+            };
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult Edit(Incident incident)
+        public IActionResult Edit(IncidentEditViewModel model)
         {
             if (ModelState.IsValid)
             {
-                if (incident.IncidentId == 0)
+                if (model.Incident.IncidentId == 0)
                 {
-                    context.Incident.Add(incident);
-                    TempData["message"] = $"{incident.Title} was added.";
+                    context.Incident.Add(model.Incident);
+                    TempData["message"] = $"{model.Incident.Title} was added.";
                 }
                 else
                 {
-                    context.Incident.Update(incident);
-                    TempData["message"] = $"{incident.Title} was updated.";
+                    context.Incident.Update(model.Incident);
+                    TempData["message"] = $"{model.Incident.Title} was updated.";
                 }
                 context.SaveChanges();
                 return RedirectToAction("List", "Incident");
             }
             else
             {
-                ViewBag.Action = (incident.IncidentId == 0) ? "Add" : "Edit";
+                ViewBag.Action = (model.Incident.IncidentId == 0) ? "Add" : "Edit";
                 ViewBag.Customer = context.Customers.OrderBy(c => c.LastName).ToList();
                 ViewBag.Product = context.Products.OrderBy(p => p.Name).ToList();
                 ViewBag.Technician = context.Technicians.OrderBy(t => t.Name).ToList();
-                return View(incident);
+                return View(model);
             }
         }
 

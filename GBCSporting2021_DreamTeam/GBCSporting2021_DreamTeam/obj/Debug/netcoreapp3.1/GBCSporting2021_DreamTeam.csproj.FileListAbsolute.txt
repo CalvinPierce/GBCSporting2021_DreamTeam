@@ -92,3 +92,5 @@ C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2
 C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\obj\Debug\netcoreapp3.1\Razor\Views\Incident\List.cshtml.g.cs
 C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\obj\Debug\netcoreapp3.1\Razor\Views\Registration\List.cshtml.g.cs
 C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\obj\Debug\netcoreapp3.1\Razor\Views\Technician\List.cshtml.g.cs
+C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\obj\Debug\netcoreapp3.1\Razor\Views\TechIncident\Get.cshtml.g.cs
+C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\obj\Debug\netcoreapp3.1\Razor\Views\TechIncident\List.cshtml.g.cs
