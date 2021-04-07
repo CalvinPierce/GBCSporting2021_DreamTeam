@@ -1,4 +1,4 @@
-﻿@model TechIncidentViewModel
+﻿@model List<Incident>
 @{
     ViewBag.Title = "Incident For Technician";
     if (TempData["message"] != null)
@@ -7,7 +7,7 @@
     }
 }
 
-@if (!Model.Incident.Any())
+@if (!Model.Any())
 {
     <h2>No open incidents for @ViewBag.techName</h2>
 }
@@ -21,7 +21,7 @@ else
             <tr><th>Title</th><th>Customer</th><th>Product</th><th>Date Opened</th><th></th></tr>
         </thead>
         <tbody>
-            @foreach (Incident incident in Model.Incident)
+            @foreach (var incident in Model)
             {
                 <tr>
                     <td>@incident.Title</td>

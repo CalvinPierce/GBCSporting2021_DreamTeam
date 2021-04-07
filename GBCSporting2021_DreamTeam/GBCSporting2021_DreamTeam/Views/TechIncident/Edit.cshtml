@@ -1,4 +1,4 @@
-﻿@model TechIncidentEditViewModel
+﻿@model Incident
 @{
     string title = ViewBag.Action + " Incident";
     ViewBag.Title = title;
@@ -10,66 +10,66 @@
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <div class="form-group">
-        <label asp-for="Incident.TechnicianId">Technician</label>
-        <select asp-for="Incident.TechnicianId" disabled class="form-control">
+        <label asp-for="TechnicianId">Technician</label>
+        <select asp-for="TechnicianId" disabled class="form-control">
             <option value="" readonly></option>
-            @foreach (Technician t in Model.TechniciansList)
+            @foreach (Technician t in ViewBag.Technician)
             {
                 <option value="@t.TechnicianId">@t.Name</option>
             }
         </select>
     </div>
 
-    <input type="hidden" asp-for="Incident.TechnicianId" />
+    <input type="hidden" asp-for="TechnicianId" />
 
     <div class="form-group">
-        <label asp-for="Incident.CustomerId">Customer</label>
-        <select asp-for="Incident.CustomerId" disabled class="form-control">
+        <label asp-for="CustomerId">Customer</label>
+        <select asp-for="CustomerId" disabled class="form-control">
             <option value="" readonly></option>
-            @foreach (Customer c in Model.Customer)
+            @foreach (Customer c in ViewBag.Customer)
             {
                 <option value="@c.CustomerId">@c.FullName</option>
             }
         </select>
     </div>
 
-    <input type="hidden" asp-for="Incident.CustomerId" />
+    <input type="hidden" asp-for="CustomerId" />
 
     <div class="form-group">
-        <label asp-for="Incident.ProductId">Product</label>
-        <select asp-for="Incident.ProductId" disabled class="form-control">
+        <label asp-for="ProductId">Product</label>
+        <select asp-for="ProductId" disabled class="form-control">
             <option value="" readonly></option>
-            @foreach (Products p in Model.Product)
+            @foreach (Products p in ViewBag.Product)
             {
                 <option value="@p.ProductId">@p.Name</option>
             }
         </select>
     </div>
 
-    <input type="hidden" asp-for="Incident.ProductId" />
+    <input type="hidden" asp-for="ProductId" />
 
     <div class="form-group">
-        <label asp-for="Incident.Title">Title</label>
-        <input asp-for="Incident.Title" readonly class="form-control">
+        <label asp-for="Title">Title</label>
+        <input asp-for="Title" readonly class="form-control">
     </div>
 
     <div class="form-group">
-        <label asp-for="Incident.Open">Date Opened</label>
-        <input asp-for="Incident.Open" readonly class="form-control">
+        <label asp-for="Open">Date Opened</label>
+        <input asp-for="Open" readonly class="form-control">
     </div>
 
     <div class="form-group">
-        <label asp-for="Incident.Description">Description</label>
-        <input asp-for="Incident.Description" class="form-control">
+        <label asp-for="Description">Description</label>
+        <input asp-for="Description" class="form-control">
     </div>
 
     <div class="form-group">
-        <label asp-for="Incident.Close">Date Closed</label>
-        <input asp-for="Incident.Close" class="form-control">
+        <label asp-for="Close">Date Closed</label>
+        <input asp-for="Close" class="form-control">
     </div>
 
-    <input type="hidden" asp-for="Incident.IncidentId" />
+    <input type="hidden" asp-for="IncidentId" />
 
     <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
-    <a asp-controller="TechIncident" asp-action="List" class="btn btn-primary">Cancel</a>
+    <a asp-controller="TechIncident" asp-action="Get" class="btn btn-primary">Cancel</a>
 </form>

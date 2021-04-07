@@ -20,20 +20,15 @@ namespace GBCSporting2021_DreamTeam
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddMemoryCache();
+            services.AddSession();
+            services.AddControllersWithViews().AddNewtonsoftJson();
+
             services.AddRouting(options => {
                 options.LowercaseUrls = true;
                 // options.AppendTrailingSlash = true; Puts a slash at the end of url
             });
-
-            services.AddMemoryCache();
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromSeconds(60 * 5);
-                options.Cookie.HttpOnly = false;
-                options.Cookie.IsEssential = true;
-            });
-
-            services.AddControllersWithViews();
 
             services.AddDbContext<IncidentContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("IncidentContext")));
@@ -46,8 +41,8 @@ namespace GBCSporting2021_DreamTeam
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting();
             app.UseSession();
+            app.UseRouting();
 
             app.UseAuthorization();
 

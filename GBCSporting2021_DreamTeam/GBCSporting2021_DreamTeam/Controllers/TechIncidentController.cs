@@ -23,57 +23,31 @@ namespace GBCSporting2021_DreamTeam.Controllers
             session.RemoveTechnician();
             return RedirectToAction("Get", "TechIncident");
         }
-
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(int id)
         {
-            var session = new ProgramSession(HttpContext.Session);
-            var tech = session.GetTechnician();
-            var model = new TechIncidentViewModel
-            {
-                TechniciansList = context.Technicians.ToList()
-            };
-            return View(model);
+            var incident = context.Incident.Find(id);
+            ViewBag.Technician = context.Technicians.OrderBy(t => t.Name).ToList();
+            return View(incident);
         }
 
         [HttpPost]
-        public IActionResult Get(TechIncidentViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                model.Technician = context.Technicians.Find(model.Technician.TechnicianId);
-
-                var session = new ProgramSession(HttpContext.Session);
-                var tech = session.GetTechnician();
-                tech.Add(model.Technician);
-                session.SetTechnician(tech);
-                return RedirectToAction("List", "TechIncident", context.Technicians.Find(model.Id));
-            }
-
-            List<Incident> incidents = context.Incident.ToList();
-            model.Incident = incidents;
-            return View(model);
-        }
-
-        [HttpPost]
-        public IActionResult List(int id)
+        public RedirectToActionResult Get(Incident incident)
         {
             var session = new ProgramSession(HttpContext.Session);
-            var tech = session.GetTechnician();
-            var model = new TechIncidentViewModel
-            {
-                Incident = context.Incident.ToList(),
-            };
+            session.SetTechnician(incident.Technician);
+            return RedirectToAction("List", "TechIncident");
 
-            IQueryable<Incident> query = context.Incident
+        }
+        [HttpPost]
+        public IActionResult List(Incident inc)
+        {
+            var incident = context.Incident
                 .Include(i => i.Customer)
                 .Include(i => i.Product)
-                .Where(i => i.TechnicianId == id);
-
-            model.Incident = query.ToList();
-            ViewBag.techName = context.Technicians.Find(id).Name;
-
-            return View(model);
+                .Where(i => i.TechnicianId == inc.TechnicianId)
+                .ToList();
+            return View(incident);
         }
 
         [HttpGet]
@@ -82,26 +56,22 @@ namespace GBCSporting2021_DreamTeam.Controllers
             var session = new ProgramSession(HttpContext.Session);
             var tech = session.GetTechnician();
             ViewBag.Action = "Edit";
-            var model = new TechIncidentEditViewModel
-            {
-                Customer = context.Customers.ToList(),
-                Product = context.Products.ToList(),
-                TechniciansList = context.Technicians.ToList(),
-                Incident = context.Incident.Find(id),
-                
-            };
-            return View(model);
+            var incident = context.Incident.Find(id);
+            ViewBag.Technician = context.Technicians.OrderBy(t => t.Name).ToList();
+            ViewBag.Customer = context.Customers.OrderBy(c => c.LastName).ToList();
+            ViewBag.Product = context.Products.OrderBy(p => p.Name).ToList();
+            return View(incident);
         }
 
         [HttpPost]
-        public IActionResult Edit(TechIncidentEditViewModel model)
+        public IActionResult Edit(Incident incident)
         {
             var session = new ProgramSession(HttpContext.Session); 
             var tech = session.GetTechnician();
             if (ModelState.IsValid)
             {
-                context.Incident.Update(model.Incident);
-                TempData["message"] = $"{model.Incident.Title} was updated.";
+                context.Incident.Update(incident);
+                TempData["message"] = $"{incident.Title} was updated.";
 
                 context.SaveChanges();
                 return RedirectToAction("Get", "TechIncident");
@@ -109,7 +79,7 @@ namespace GBCSporting2021_DreamTeam.Controllers
             else
             {
                 ViewBag.Action = "Edit";
-                return View(model);
+                return View(incident);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace GBCSporting2021_DreamTeam.Models
 {
@@ -6,22 +7,49 @@ namespace GBCSporting2021_DreamTeam.Models
     {
         [Key]
         public int CustomerId { get; set; }
+
         [Required(ErrorMessage = "Please enter a first name.")]
+        [Range(1, 51,
+            ErrorMessage = "First name must be between 1 and 51 characters.")]
         public string FirstName { get; set; }
+
         [Required(ErrorMessage = "Please enter a last name.")]
+        [Range(1, 51,
+            ErrorMessage = "Last name must be between 1 and 51 characters.")]
         public string LastName { get; set; }
+
         [Required(ErrorMessage = "Please enter a address.")]
+        [Range(1, 51,
+            ErrorMessage = "Address must be between 1 and 51 characters.")]
         public string Address { get; set; }
+
         [Required(ErrorMessage = "Please enter a city.")]
+        [Range(1, 51,
+            ErrorMessage = "City must be between 1 and 51 characters.")]
         public string City { get; set; }
+
         [Required(ErrorMessage = "Please enter a state or province.")]
+        [Range(1, 51,
+            ErrorMessage = "State must be between 1 and 51 characters.")]
         public string State { get; set; }
+
         [Required(ErrorMessage = "Please enter a postal code.")]
+        [Range(1, 21,
+            ErrorMessage = "Postal must be between 1 and 21 characters.")]
         public string PostalCode { get; set; }
+
         [Required(ErrorMessage = "Please enter a country.")]
         public string CountryId { get; set; }
-        public Country Country { get;set; }
+
+        public Country Country { get; set; }
+
+        [Range(1, 51,
+            ErrorMessage = "Email must be between 1 and 51 characters.")]
+        [Remote("CheckEmail", "Validation")]
         public string Email { get; set; }
+
+        [RegularExpression("^\\(\\d{3}\\)\\s?\\d{3}-\\d{4}",
+            ErrorMessage = "Phone number must be in (999) 999-9999 format.")]
         public string Phone { get; set; }
         public string FullName =>
             FirstName + " " + LastName;

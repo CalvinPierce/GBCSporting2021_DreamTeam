@@ -1,4 +1,4 @@
-﻿@model TechIncidentViewModel
+﻿@model Incident
 @{
     ViewBag.Title = "Get Technician";
 }
@@ -8,9 +8,9 @@
 
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <select asp-for="Id" class="form-control">
+        <select asp-for="TechnicianId" class="form-control">
             <option value=""></option>
-            @foreach (Technician t in Model.TechniciansList)
+            @foreach (Technician t in ViewBag.Technician)
             {
                 <option value="@t.TechnicianId">@t.Name</option>
             }
