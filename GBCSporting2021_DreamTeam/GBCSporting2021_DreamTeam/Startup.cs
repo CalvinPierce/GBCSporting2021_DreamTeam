@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace GBCSporting2021_DreamTeam
 {
@@ -23,6 +24,15 @@ namespace GBCSporting2021_DreamTeam
                 options.LowercaseUrls = true;
                 // options.AppendTrailingSlash = true; Puts a slash at the end of url
             });
+
+            services.AddMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(60 * 5);
+                options.Cookie.HttpOnly = false;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddControllersWithViews();
 
             services.AddDbContext<IncidentContext>(options =>
@@ -37,6 +47,7 @@ namespace GBCSporting2021_DreamTeam
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 

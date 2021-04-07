@@ -98,9 +98,9 @@ namespace GBCSporting2021_DreamTeam.Controllers
             else
             {
                 ViewBag.Action = (model.Incident.IncidentId == 0) ? "Add" : "Edit";
-                ViewBag.Customer = context.Customers.OrderBy(c => c.LastName).ToList();
-                ViewBag.Product = context.Products.OrderBy(p => p.Name).ToList();
-                ViewBag.Technician = context.Technicians.OrderBy(t => t.Name).ToList();
+                model.Customers = context.Customers.OrderBy(c => c.LastName).ToList();
+                model.Products = context.Products.OrderBy(p => p.Name).ToList();
+                model.Technicians = context.Technicians.OrderBy(t => t.Name).ToList();
                 return View(model);
             }
         }
