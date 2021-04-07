@@ -1,4 +1,5 @@
 ﻿using GBCSporting2021_DreamTeam.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -15,63 +16,51 @@ namespace GBCSporting2021_DreamTeam.Controllers
         }
         public RedirectToActionResult Index()
         {
-            return RedirectToAction("List", "Registration");
+            return RedirectToAction("Get", "Registration");
         }
 
-        [Route("[controller]")]
-        public IActionResult List()
+        [HttpGet]
+        public IActionResult List(int id)
         {
-            var reg = context.Registration
+            var model = new RegistrationViewModel
+            {
+                Customer = context.Customers.Find(id),
+                Registrations = context.Registration
                 .Include(r => r.Product)
-                .Include(r => r.Customer)
-                .OrderBy(r => r.RegistrationDate)
-                .ToList();
-            return View(reg);
-        }
-
-        [HttpGet]
-        public IActionResult Add()
-        {
-            ViewBag.Action = "Add";
-            ViewBag.Customer = context.Customers.OrderBy(c => c.LastName).ToList();
-            ViewBag.Product = context.Products.OrderBy(p => p.Name).ToList();
-            return View("Edit", new Registration());
-        }
-        [HttpGet]
-        public IActionResult Edit(int id)
-        {
-            ViewBag.Action = "Edit";
-            ViewBag.Customer = context.Customers.OrderBy(c => c.LastName).ToList();
-            ViewBag.Product = context.Products.OrderBy(p => p.Name).ToList();
-            var reg = context.Registration.Find(id);
-            return View(reg);
+                .Where(r => r.CustomerId == id)
+                .ToList(),
+                Products = context.Products.ToList(),
+            };
+            HttpContext.Session.SetInt32("customerId", id);
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult Edit(Registration reg)
+        public IActionResult List(RegistrationViewModel model)
         {
+            int? id = HttpContext.Session.GetInt32("customerId");
             if (ModelState.IsValid)
             {
-                if (reg.RegistrationId == 0)
+                Registration reg = new Registration
                 {
-                    context.Registration.Add(reg);
-                    TempData["message"] = $"Registration for {reg.Customer.FullName} was added.";
-                }
-                else
-                {
-                    context.Registration.Update(reg);
-                    TempData["message"] = $"Registration for {reg.Customer.FullName} was updated.";
-                }
-                context.SaveChanges();
-                return RedirectToAction("List", "Registration");
+                    CustomerId = (int) id,
+                    ProductId = model.productId
+                };
+                context.Registration.Add(reg);
+                context.SaveChanges(); 
+                TempData["message"] = "Registration added";
             }
-            else
+            model = new RegistrationViewModel
             {
-                ViewBag.Action = (reg.RegistrationId == 0) ? "Add" : "Edit";
-                ViewBag.Customer = context.Customers.OrderBy(c => c.LastName).ToList();
-                ViewBag.Product = context.Products.OrderBy(p => p.Name).ToList();
-                return View(reg);
-            }
+                Customer = context.Customers.Find(id),
+                Registrations = context.Registration
+                .Include(r => r.Product)
+                .Where(r => r.CustomerId == id)
+                .ToList(),
+                Products = context.Products.ToList(),
+            };
+            HttpContext.Session.SetInt32("customerId", model.Customer.CustomerId);
+            return View(model);
         }
 
         [HttpGet]
@@ -87,7 +76,30 @@ namespace GBCSporting2021_DreamTeam.Controllers
             TempData["message"] = "Registration successfully deleted.";
             context.Registration.Remove(reg);
             context.SaveChanges();
-            return RedirectToAction("List", "Registration");
+            int? id = HttpContext.Session.GetInt32("customerId");
+            return RedirectToAction("List", "Registration", new { id = id });
         }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var model = new RegistrationViewModel
+            {
+                Customers = context.Customers.ToList()
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Get(RegistrationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("List", "Registration", new { id = model.customerId });
+            }
+            model.Customers = context.Customers.ToList();
+            return View(model);
+        }
+
     }
 }

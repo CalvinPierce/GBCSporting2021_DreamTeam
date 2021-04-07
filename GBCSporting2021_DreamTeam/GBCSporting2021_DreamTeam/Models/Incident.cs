@@ -19,7 +19,11 @@ namespace GBCSporting2021_DreamTeam.Models
         public string Description { get; set; }
         public int? TechnicianId  { get; set; }
         public Technician Technician { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? Open { get; set; } = null;
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? Close { get; set; } = null;
         public string Slug =>
            Title?.Replace(' ', '-').ToLower() + '-' + Description?.Replace(' ', '-').ToLower();

@@ -12,8 +12,9 @@ namespace GBCSporting2021_DreamTeam.Models
         [Required(ErrorMessage = "Please select a product.")]
         public int ProductId { get; set; }
         public Products Product { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime RegistrationDate { get; set; } = DateTime.Now.Date;
-        public string Slug =>
-                   Customer.FullName?.Replace(' ', '-').ToLower() + '-' + RegistrationDate;
+
     }
 }

@@ -74,7 +74,8 @@ namespace GBCSporting2021_DreamTeam.Models
                     TechnicianId = 1, Open = new DateTime(2020, 1, 10), Close = null }
             );
             modelBuilder.Entity<Registration>().HasData(
-                new Registration { RegistrationId = 1, CustomerId = 1, ProductId = 5, RegistrationDate = new DateTime(2021, 2, 21) }
+                new Registration { RegistrationId = 1, CustomerId = 1, ProductId = 5, RegistrationDate = new DateTime(2021, 2, 21) },
+                new Registration { RegistrationId = 2, CustomerId = 1, ProductId = 3, RegistrationDate = new DateTime(2021, 2, 21) }
             );
         }
     }

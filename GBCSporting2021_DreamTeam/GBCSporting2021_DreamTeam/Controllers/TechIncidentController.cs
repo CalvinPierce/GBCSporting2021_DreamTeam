@@ -1,4 +1,5 @@
 ﻿using GBCSporting2021_DreamTeam.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,10 +20,9 @@ namespace GBCSporting2021_DreamTeam.Controllers
         }
         public RedirectToActionResult Index()
         {
-            var session = new ProgramSession(HttpContext.Session);
-            session.RemoveTechnician();
             return RedirectToAction("Get", "TechIncident");
         }
+
         [HttpGet]
         public IActionResult Get(int id)
         {
@@ -36,6 +36,7 @@ namespace GBCSporting2021_DreamTeam.Controllers
         {
             var session = new ProgramSession(HttpContext.Session);
             session.SetTechnician(incident.Technician);
+            TempData["techName"] = incident.Technician.Name;
             return RedirectToAction("List", "TechIncident");
 
         }
@@ -66,7 +67,7 @@ namespace GBCSporting2021_DreamTeam.Controllers
         [HttpPost]
         public IActionResult Edit(Incident incident)
         {
-            var session = new ProgramSession(HttpContext.Session); 
+            var session = new ProgramSession(HttpContext.Session);
             var tech = session.GetTechnician();
             if (ModelState.IsValid)
             {

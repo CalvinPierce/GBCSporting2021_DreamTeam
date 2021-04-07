@@ -1,15 +1,15 @@
-﻿@model Incident
+﻿@model Registration
 @{
     ViewBag.Title = "Delete Registration";
 }
 
 <h2>Confirm Deletion</h2>
-<h3>@Model.Title (@Model.Description)</h3>
+<h3>Delete registration?</h3>
 
 <form asp-action="Delete" method="post">
-    <input type="hidden" asp-for="IncidentId" />
+    <input type="hidden" asp-for="RegistrationId" />
 
     <button type="submit" class="btn btn-primary">Delete</button>
-    <a asp-controller="Incident" asp-action="Index" class="btn btn-primary">Cancel</a>
+    <a asp-controller="Registration" asp-action="Index" class="btn btn-primary">Cancel</a>
 </form>
 

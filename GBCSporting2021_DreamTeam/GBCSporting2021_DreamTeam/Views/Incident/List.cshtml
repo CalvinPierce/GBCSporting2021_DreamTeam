@@ -30,7 +30,10 @@
                     <td>@incident.Title</td>
                     <td>@incident.Customer.FullName</td>
                     <td>@incident.Product.Name</td>
+                   @if (incident.Open != null)
+                   {
                     <td>@incident.Open.Value.ToString("yyyy/MM/dd")</td>
+                   }
                     <td>
                         <a class="btn btn-primary" role="button"
                            asp-controller="Incident" asp-action="Edit"

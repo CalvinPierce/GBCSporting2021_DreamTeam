@@ -72,7 +72,6 @@ C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2
 C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\obj\Debug\net5.0\Razor\Views\Products\Edit.cshtml.g.cs
 C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\obj\Debug\net5.0\Razor\Views\Products\List.cshtml.g.cs
 C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\obj\Debug\net5.0\Razor\Views\Registration\Delete.cshtml.g.cs
-C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\obj\Debug\net5.0\Razor\Views\Registration\Edit.cshtml.g.cs
 C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\obj\Debug\net5.0\Razor\Views\Registration\List.cshtml.g.cs
 C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\obj\Debug\net5.0\Razor\Views\TechIncident\Edit.cshtml.g.cs
@@ -91,3 +90,4 @@ C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2
 C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\obj\Debug\net5.0\ref\GBCSporting2021_DreamTeam.dll
 C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\obj\Debug\net5.0\GBCSporting2021_DreamTeam.pdb
 C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\obj\Debug\net5.0\GBCSporting2021_DreamTeam.genruntimeconfig.cache
+C:\Users\calvi\Desktop\GBC 20-21 (Year 2)\Winter Semester\COMP 2139\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\GBCSporting2021_DreamTeam\obj\Debug\net5.0\Razor\Views\Registration\Get.cshtml.g.cs

@@ -1,4 +1,4 @@
-﻿@model List<Registration>
+﻿@model RegistrationViewModel
 @{
     ViewBag.Title = "Registration Manager";
     if (TempData["message"] != null)
@@ -6,34 +6,71 @@
         <h2 class="bg-dark text-white p-2">@TempData["message"]</h2>
     }
 }
+@if (!Model.Registrations.Any())
+{
+    <h2>No open incidents for @Model.Customer.FullName</h2>
 
-<h2>Registration Manager</h2>
-<table class="table table-bordered">
-    <thead>
-        <tr><th>Product</th><th>Customer</th><th>Registrations</th><th></th><th></th></tr>
-    </thead>
-    <tbody>
-        @foreach (var reg in Model)
-        {
-            <tr>
-                <td>@reg.Product.Name</td>
-                <td>@reg.Customer.FullName</td>
-                <td>@reg.RegistrationDate.ToString("yyyy/MM/dd")</td>
-                <td>
-                    <a class="btn btn-primary" role="button"
-                       asp-controller="Registration" asp-action="Edit"
-                       asp-route-id="@reg.RegistrationId"
-                       asp-route-slug="@reg.Slug">Edit</a>
-                </td>
-                <td>
-                    <a class="btn btn-primary" role="button"
-                       asp-controller="Registration" asp-action="Delete"
-                       asp-route-id="@reg.RegistrationId"
-                       asp-route-slug="@reg.Slug">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<a class="btn btn-primary" role="button" asp-controller="Registration" asp-action="Add">Add Incident</a>
+    <h2>Product</h2>
+
+    <form asp-action="List" method="post">
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <select asp-for="Registration.ProductId" class="form-control">
+                <option value=""></option>
+                @foreach (Products p in Model.Products)
+                {
+                    <option value="@p.ProductId">@p.Name</option>
+                }
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Register</button>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Cancel</a>
+    </form>
+}
+else
+{
+<h2>Customer:@Model.Customer.FullName</h2>
+    <h2>Registrations</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr><th>Product</th><th></th></tr>
+        </thead>
+        <tbody>
+            @foreach (Registration r in Model.Registrations)
+            {
+                <tr>
+                    <td>@r.Product.Name</td>
+                    <td>
+                        <a class="btn btn-primary" role="button"
+                           asp-controller="Registration" asp-action="Delete"
+                           asp-route-id="@r.RegistrationId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>Product</h2>
+
+    <form asp-action="List" asp-controller="Registration" method="post">
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <select asp-for="productId" class="form-control">
+                <option value=""></option>
+                @foreach (Products p in Model.Products)
+                {
+                    <option value="@p.ProductId">@p.Name</option>
+                }
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Register</button>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Cancel</a>
+    </form>
+}
+
+<br />
 <a class="btn btn-primary" role="button" asp-controller="Home" asp-action="Index">Home</a>

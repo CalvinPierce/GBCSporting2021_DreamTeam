@@ -38,7 +38,7 @@ namespace GBCSporting2021_DreamTeam.Models
             ErrorMessage = "Postal must be between 1 and 21 characters.")]
         public string PostalCode { get; set; }
 
-        [Required(ErrorMessage = "Please enter a country.")]
+        [Required(ErrorMessage = "Please select a valid country.")]
         public string CountryId { get; set; }
 
         public Country Country { get; set; }
