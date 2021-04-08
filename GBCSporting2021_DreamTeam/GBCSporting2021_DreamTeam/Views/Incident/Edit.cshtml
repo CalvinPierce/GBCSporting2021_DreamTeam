@@ -1,6 +1,6 @@
 ﻿@model IncidentEditViewModel
 @{
-    string title = ViewBag.Action + " Incident";
+    string title = Model.Action + " Incident";
     ViewBag.Title = title;
 }
 
@@ -64,6 +64,6 @@
 
     <input type="hidden" asp-for="Incident.IncidentId"/>
 
-    <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
+    <button type="submit" class="btn btn-primary">@Model.Action</button>
     <a asp-controller="Incident" asp-action="Index" class="btn btn-primary">Cancel</a>
 </form>

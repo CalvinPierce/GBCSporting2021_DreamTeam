@@ -19,36 +19,36 @@
         <a class="nav-link@(Model.Filter.CompareTo("open") == 0 ? " active" : "")" asp-controller="Incident" asp-action="List" asp-route-filter="open">Open Incidents</a>
     </li>
 </ul>
-    <table class="table table-bordered">
-        <thead>
-            <tr><th>Title</th><th>Customer</th><th>Product</th><th>Date Opened</th><th></th><th></th></tr>
-        </thead>
-        <tbody>
-            @foreach (Incident incident in Model.Incident)
-            {
-                <tr>
-                    <td>@incident.Title</td>
-                    <td>@incident.Customer.FullName</td>
-                    <td>@incident.Product.Name</td>
-                   @if (incident.Open != null)
-                   {
+<table class="table table-bordered">
+    <thead>
+        <tr><th>Title</th><th>Customer</th><th>Product</th><th>Date Opened</th><th></th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (Incident incident in Model.Incident)
+        {
+            <tr>
+                <td>@incident.Title</td>
+                <td>@incident.Customer.FullName</td>
+                <td>@incident.Product.Name</td>
+                @if (incident.Open != null)
+                {
                     <td>@incident.Open.Value.ToString("yyyy/MM/dd")</td>
-                   }
-                    <td>
-                        <a class="btn btn-primary" role="button"
-                           asp-controller="Incident" asp-action="Edit"
-                           asp-route-id="@incident.IncidentId"
-                           asp-route-slug="@incident.Slug">Edit</a>
-                    </td>
-                    <td>
-                        <a class="btn btn-primary" role="button"
-                           asp-controller="Incident" asp-action="Delete"
-                           asp-route-id="@incident.IncidentId"
-                           asp-route-slug="@incident.Slug">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <a class="btn btn-primary" role="button" asp-controller="Incident" asp-action="Add">Add Incident</a>
-    <a class="btn btn-primary" role="button" asp-controller="Home" asp-action="Index">Home</a>
+                }
+                <td>
+                    <a class="btn btn-primary" role="button"
+                       asp-controller="Incident" asp-action="Edit"
+                       asp-route-id="@incident.IncidentId"
+                       asp-route-slug="@incident.Slug">Edit</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" role="button"
+                       asp-controller="Incident" asp-action="Delete"
+                       asp-route-id="@incident.IncidentId"
+                       asp-route-slug="@incident.Slug">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-primary" role="button" asp-controller="Incident" asp-action="Edit" asp-route-id="0">Add Incident</a>
+<a class="btn btn-primary" role="button" asp-controller="Home" asp-action="Index">Home</a>

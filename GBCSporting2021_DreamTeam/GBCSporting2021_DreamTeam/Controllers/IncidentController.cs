@@ -1,6 +1,7 @@
 ﻿using GBCSporting2021_DreamTeam.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 
 namespace GBCSporting2021_DreamTeam.Controllers
@@ -49,32 +50,33 @@ namespace GBCSporting2021_DreamTeam.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
-        {
-            ViewBag.Action = "Add";
-            var model = new IncidentEditViewModel
-            {
-                Customers = context.Customers.ToList(),
-                Products = context.Products.ToList(),
-                Technicians = context.Technicians.ToList(),
-                Incident = new Incident(),
-                Action = "Add"
-            };
-            return View("Edit", model);
-        }
-        [HttpGet]
         public IActionResult Edit(int id)
         {
-            ViewBag.Action = "Edit";
-            var model = new IncidentEditViewModel
+            ViewBag.Action = "Add";
+            if (id == 0)
             {
-                Customers = context.Customers.ToList(),
-                Products = context.Products.ToList(),
-                Technicians = context.Technicians.ToList(),
-                Incident = context.Incident.Find(id),
-                Action = "Edit"
-            };
-            return View(model);
+                var model = new IncidentEditViewModel
+                {
+                    Customers = context.Customers.ToList(),
+                    Products = context.Products.ToList(),
+                    Technicians = context.Technicians.ToList(),
+                    Incident = new Incident(),
+                    Action = "Add"
+                };
+                return View("Edit", model);
+            }
+            else
+            {
+                var model = new IncidentEditViewModel
+                {
+                    Customers = context.Customers.ToList(),
+                    Products = context.Products.ToList(),
+                    Technicians = context.Technicians.ToList(),
+                    Incident = context.Incident.Find(id),
+                    Action = "Add"
+                };
+                return View("Edit", model);
+            }
         }
 
         [HttpPost]

@@ -6690,11 +6690,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\calvi\\Desktop\\GBC 20-21 (Year 2)\\Winter Semester\\COMP 2139\\GBCSporting2021_DreamTeam\\GBCSporting2021_DreamTeam\\GBCSporting2021_DreamTeam\\GBCSporting2021_DreamTeam.csproj",
+      "projectUniqueName": "C:\\Users\\calvi\\Desktop\\GBC 20-21 (Year 2)\\Winter Semester\\COMP 2139\\Assignment2\\GBCSporting2021_DreamTeam\\GBCSporting2021_DreamTeam\\GBCSporting2021_DreamTeam.csproj",
       "projectName": "GBCSporting2021_DreamTeam",
-      "projectPath": "C:\\Users\\calvi\\Desktop\\GBC 20-21 (Year 2)\\Winter Semester\\COMP 2139\\GBCSporting2021_DreamTeam\\GBCSporting2021_DreamTeam\\GBCSporting2021_DreamTeam\\GBCSporting2021_DreamTeam.csproj",
+      "projectPath": "C:\\Users\\calvi\\Desktop\\GBC 20-21 (Year 2)\\Winter Semester\\COMP 2139\\Assignment2\\GBCSporting2021_DreamTeam\\GBCSporting2021_DreamTeam\\GBCSporting2021_DreamTeam.csproj",
       "packagesPath": "C:\\Users\\calvi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\calvi\\Desktop\\GBC 20-21 (Year 2)\\Winter Semester\\COMP 2139\\GBCSporting2021_DreamTeam\\GBCSporting2021_DreamTeam\\GBCSporting2021_DreamTeam\\obj\\",
+      "outputPath": "C:\\Users\\calvi\\Desktop\\GBC 20-21 (Year 2)\\Winter Semester\\COMP 2139\\Assignment2\\GBCSporting2021_DreamTeam\\GBCSporting2021_DreamTeam\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\calvi\\AppData\\Roaming\\NuGet\\NuGet.Config",
