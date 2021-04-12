@@ -9,12 +9,12 @@
 
     @if (!Model.Any())
     {
-        <h2>No open incidents for @ViewBag.techName</h2>
+        <h2>No open incidents for @ViewBag.Name</h2>
     }
     else
     {
 
-        <h2>Technician:@TempData["techName"]</h2>
+        <h2>Technician:@ViewBag.Name</h2>
         <h2>Assigned/Open Incidents</h2>
         <table class="table table-bordered">
             <thead>
@@ -39,5 +39,5 @@
             </tbody>
         </table>
     }
-    <a class="btn btn-primary" role="button" asp-controller="TechIncident" asp-action="Index">Switch Technician</a>
+    <a class="btn btn-primary" role="button" asp-controller="TechIncident" asp-action="Get">Switch Technician</a>
     <a class="btn btn-primary" role="button" asp-controller="Home" asp-action="Index">Home</a>

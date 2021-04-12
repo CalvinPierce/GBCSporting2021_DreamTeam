@@ -45,7 +45,7 @@
                            asp-controller="Incident" asp-action="Index">Incidents</a>
                         <a class="nav-link
                         @(controller == "Registration" ? "active" : "")"
-                           asp-controller="Registration" asp-action="Get">Registrations</a>
+                           asp-controller="Registration" asp-action="Index">Registrations</a>
                         <a class="nav-link
                         @(controller == "Home" && action == "About" ? "active" : "")"
                            asp-controller="Home" asp-action="About">About</a>
@@ -67,7 +67,7 @@
             <a asp-area="" asp-controller="Technician" asp-action="Index">Technicians</a>
             <a asp-area="" asp-controller="Customer" asp-action="Index">Customers</a>
             <a asp-area="" asp-controller="Incident" asp-action="Index">Incidents</a>
-            <a asp-area="" asp-controller="Registration" asp-action="Get">Registrations</a>
+            <a asp-area="" asp-controller="Registration" asp-action="Index">Registrations</a>
             <a asp-area="" asp-controller="Home" asp-action="About">About</a>
         </div>
     </footer>

@@ -1,4 +1,6 @@
-﻿using GBCSporting2021_DreamTeam.Models;
+﻿using GBCSporting2021_DreamTeam.DataAccess;
+using GBCSporting2021_DreamTeam.Models;
+using GBCSporting2021_DreamTeam.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
@@ -6,11 +8,11 @@ namespace GBCSporting2021_DreamTeam.Controllers
 {
     public class ProductsController : Controller
     {
-        private IncidentContext context { get; set; }
+        private Repository<Products> repository;
 
         public ProductsController(IncidentContext ctx)
         {
-            context = ctx;
+            repository = new Repository<Products>(ctx);
         }
         public RedirectToActionResult Index()
         {
@@ -20,9 +22,7 @@ namespace GBCSporting2021_DreamTeam.Controllers
         [Route("[controller]")]
         public IActionResult List()
         {
-            var products = context.Products
-                .OrderBy(p => p.ReleaseDate)
-                .ToList();
+            var products = repository.Get(orderBy: p => p.OrderBy(q => q.ReleaseDate)).ToList();
             return View(products);
         }
 
@@ -36,7 +36,7 @@ namespace GBCSporting2021_DreamTeam.Controllers
         public IActionResult Edit(int id)
         {
             ViewBag.Action = "Edit";
-            var product = context.Products.Find(id);
+            var product = repository.Get(id);
             return View(product);
         }
 
@@ -47,15 +47,15 @@ namespace GBCSporting2021_DreamTeam.Controllers
             {
                 if (product.ProductId == 0)
                 {
-                    context.Products.Add(product);
+                    repository.Insert(product);
                     TempData["message"] = $"{product.Name} was added.";
                 }
                 else
                 {
-                    context.Products.Update(product);
+                    repository.Update(product);
                     TempData["message"] = $"{product.Name} was updated.";
                 }
-                context.SaveChanges();
+                repository.Save();
                 return RedirectToAction("List", "Products");
             }
             else
@@ -68,7 +68,7 @@ namespace GBCSporting2021_DreamTeam.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var product = context.Products.Find(id);
+            var product = repository.Get(id);
             return View(product);
 
         }
@@ -78,8 +78,8 @@ namespace GBCSporting2021_DreamTeam.Controllers
         {
             string name = product.Name;
             TempData["message"] = "Product successfully deleted.";
-            context.Products.Remove(product);
-            context.SaveChanges();
+            repository.Delete(product);
+            repository.Save();
             return RedirectToAction("List", "Products");
         }
     }

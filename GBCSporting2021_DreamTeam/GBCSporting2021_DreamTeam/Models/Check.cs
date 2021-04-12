@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using GBCSporting2021_DreamTeam.DataAccess;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace GBCSporting2021_DreamTeam.Models
 {

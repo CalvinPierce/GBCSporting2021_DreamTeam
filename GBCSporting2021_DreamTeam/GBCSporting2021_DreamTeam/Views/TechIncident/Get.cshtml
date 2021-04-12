@@ -1,24 +1,24 @@
-﻿@model Incident
-    @{
-        ViewBag.Title = "Get Technician";
-    }
+﻿@model IEnumerable<Technician>
+@{
+    ViewBag.Title = "Get Technician";
+}
 
-    <h2>Get Technician</h2>
-    <form asp-action="List" method="post">
+<h2>Get Technician</h2>
+<form asp-action="Set" method="post">
 
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="form-group">
-            <select asp-for="TechnicianId" class="form-control" required
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <select name="id" id="getTechnicianSelect" class="form-control" required
                 oninvalid="this.setCustomValidity('Please select a technician')"
                 onvalid="this.setCustomValidity('')">
-                <option value=""></option>
-                @foreach (Technician t in ViewBag.Technician)
-                {
-                    <option value="@t.TechnicianId">@t.Name</option>
-                }
-            </select>
-        </div>
+            <option value=""></option>
+            @foreach (Technician t in Model)
+            {
+                <option value="@t.TechnicianId">@t.Name</option>
+            }
+        </select>
+    </div>
 
-        <button type="submit" class="btn btn-primary">Select</button>
-        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Cancel</a>
-    </form>
+    <button type="submit" class="btn btn-primary">Select</button>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Cancel</a>
+</form>

@@ -1,10 +1,9 @@
-using GBCSporting2021_DreamTeam.Models;
+using GBCSporting2021_DreamTeam.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace GBCSporting2021_DreamTeam
 {
@@ -23,7 +22,7 @@ namespace GBCSporting2021_DreamTeam
 
             services.AddMemoryCache();
             services.AddSession();
-            services.AddControllersWithViews().AddNewtonsoftJson();
+            services.AddControllersWithViews();
 
             services.AddRouting(options => {
                 options.LowercaseUrls = true;

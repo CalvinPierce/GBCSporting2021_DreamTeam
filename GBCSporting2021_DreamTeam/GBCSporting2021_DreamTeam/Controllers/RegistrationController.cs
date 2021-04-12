@@ -1,104 +1,96 @@
-﻿using GBCSporting2021_DreamTeam.Models;
+﻿using GBCSporting2021_DreamTeam.DataAccess;
+using GBCSporting2021_DreamTeam.Models;
+using GBCSporting2021_DreamTeam.Session;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 
 namespace GBCSporting2021_DreamTeam.Controllers
 {
     public class RegistrationController : Controller
     {
-        private IncidentContext context { get; set; }
+        private UnitOfWork unitOfWork;
 
         public RegistrationController(IncidentContext ctx)
         {
-            context = ctx;
+            unitOfWork = new UnitOfWork(ctx);
         }
         public RedirectToActionResult Index()
         {
-            return RedirectToAction("Get", "Registration");
+            return RedirectToAction("List", "Registration");
         }
 
-        [HttpGet]
-        public IActionResult List(int id)
+        public IActionResult List()
         {
-            var model = new RegistrationViewModel
+            var session = new RegistrationSession(HttpContext.Session);
+            var cid = session.GetId();
+            if (cid == -1)
             {
-                Customer = context.Customers.Find(id),
-                Registrations = context.Registration
-                .Include(r => r.Product)
-                .Where(r => r.CustomerId == id)
-                .ToList(),
-                Products = context.Products.ToList(),
-            };
-            HttpContext.Session.SetInt32("customerId", id);
-            return View(model);
+                return RedirectToAction("Get");
+            }
+
+            var customer = unitOfWork.CustomerRepository.Get(cid);
+            var products = unitOfWork.ProductRepository.Get(orderBy: p => p.OrderBy(q => q.Name)).ToList();
+            var registrations = unitOfWork.RegistrationRepository.Get().Where(r => r.CustomerId == cid).ToList();
+
+            var viewModel = new RegistrationViewModel { Customer = customer, Products = products, Registrations = registrations };
+
+            return View(viewModel);
         }
 
-        [HttpPost]
-        public IActionResult List(RegistrationViewModel model)
+        public IActionResult Get()
         {
-            int? id = HttpContext.Session.GetInt32("customerId");
+            ViewBag.Customers = unitOfWork.CustomerRepository.Get(orderBy: c => c.OrderBy(q => q.LastName)).ToList();
+            return View();
+        }
+
+        public IActionResult Set(string id)
+        {
+            Int32.TryParse(id, out int cid);
+            var session = new RegistrationSession(HttpContext.Session);
+            session.SetId(cid);
+            return RedirectToAction("List");
+        }
+
+        public IActionResult AddRegistration(int id)
+        {
+            var session = new RegistrationSession(HttpContext.Session);
+            var cid = session.GetId();
+            string name = unitOfWork.ProductRepository.Get(id).Name;
+
             if (ModelState.IsValid)
             {
-                Registration reg = new Registration
+                // check if product is already registered
+                if (unitOfWork.RegistrationRepository.Get().Where(r => r.ProductId == id).Where(r => r.CustomerId == cid).ToList().Count() != 0)
                 {
-                    CustomerId = (int) id,
-                    ProductId = model.productId
-                };
-                context.Registration.Add(reg);
-                context.SaveChanges(); 
-                TempData["message"] = "Registration added";
+                    TempData["message"] = name + " already registered";
+                }
+                else
+                {
+                    unitOfWork.RegistrationRepository.Insert(new Registration { CustomerId = cid, ProductId = id });
+                    unitOfWork.RegistrationRepository.Save();
+                    TempData["message"] = name + " Added!";
+                }
             }
-            model = new RegistrationViewModel
-            {
-                Customer = context.Customers.Find(id),
-                Registrations = context.Registration
-                .Include(r => r.Product)
-                .Where(r => r.CustomerId == id)
-                .ToList(),
-                Products = context.Products.ToList(),
-            };
-            HttpContext.Session.SetInt32("customerId", model.Customer.CustomerId);
-            return View(model);
+            return RedirectToAction("List");
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var incident = context.Registration.Find(id);
-            return View(incident);
+            var registration = unitOfWork.RegistrationRepository.Get(id);
+            return View(registration);
         }
 
         [HttpPost]
         public RedirectToActionResult Delete(Registration reg)
         {
             TempData["message"] = "Registration successfully deleted.";
-            context.Registration.Remove(reg);
-            context.SaveChanges();
+            unitOfWork.RegistrationRepository.Delete(reg);
+            unitOfWork.Save();
             int? id = HttpContext.Session.GetInt32("customerId");
             return RedirectToAction("List", "Registration", new { id = id });
-        }
-
-        [HttpGet]
-        public IActionResult Get()
-        {
-            var model = new RegistrationViewModel
-            {
-                Customers = context.Customers.ToList()
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        public IActionResult Get(RegistrationViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                return RedirectToAction("List", "Registration", new { id = model.customerId });
-            }
-            model.Customers = context.Customers.ToList();
-            return View(model);
         }
 
     }
